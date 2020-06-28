@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="YoutubeDL\ffmpeg.exe" />
+    <None Remove="YoutubeDL\ffplay.exe" />
+    <None Remove="YoutubeDL\ffprobe.exe" />
+    <None Remove="YoutubeDL\youtube-dl.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="YoutubeDL\ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YoutubeDL\ffplay.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YoutubeDL\ffprobe.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YoutubeDL\youtube-dl.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.4" />
+  </ItemGroup>
+
+</Project>

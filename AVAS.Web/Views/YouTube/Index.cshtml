@@ -1,0 +1,75 @@
+﻿@model AVAS.Web.ViewModels.YouTube.IndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>YouTube Search</h1>
+
+<form asp-action="IndexPost" class="mb-2">
+    <div class="row">
+        <div class="col-md-6 col-12 mb-2">
+            <input type="text" asp-for="SearchTerm" class="form-control" placeholder="video name...">
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <select asp-for="Type" asp-items="AVAS.Web.Helpers.VideoRequestHelper.GetRequestTypeItems()" class="form-control">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+
+<ul style="list-style:none;" class="p-0 mt-2">
+    @foreach (var result in Model.VideoResults)
+    {
+        <li class="mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5 col-12">
+                            <a target="_blank" href="@result.Url" >
+                                <img src="@result.Thumbnail" style="width: 250px;" />
+                            </a>
+                        </div>
+                        <div class="col-md-7 col-12">
+                            <span class="d-block">
+                                <strong>
+                                    @result.Title
+                                </strong>
+                            </span>
+                            <span class="d-block">
+                                @result.Duration
+                            </span>
+                            <span class="d-block">
+                                @result.Author
+                            </span>
+                            <span class="d-block mt-2">
+                                @result.ViewOrVideoHumanized
+                            </span>
+
+
+                            <form asp-action="AddVideoToQueue">
+                                @Html.Hidden("Author", result.Author)
+                                @Html.Hidden("Description", result.Description)
+                                @Html.Hidden("Duration", result.Duration)
+                                @Html.Hidden("Thumbnail", result.Thumbnail)
+                                @Html.Hidden("Title", result.Title)
+                                @Html.Hidden("Url", result.Url)
+                                @Html.Hidden("ViewCount", result.ViewCount)
+                                <button class="btn btn-link px-0" type="submit">Add to Queue</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </li>
+    }
+
+</ul>

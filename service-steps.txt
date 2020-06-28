@@ -1,0 +1,7 @@
+sc create "AVAS" binPath=C:\DEPLOY_LOCATION_OF_APP\AVAS.Job.Service.exe
+sc query "AVAS"
+sc start "AVAS"
+
+// to remove, stop then delete
+sc stop "AVAS"
+sc delete "AVAS"

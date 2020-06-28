@@ -1,0 +1,95 @@
+﻿@model IEnumerable<AVAS.Web.ViewModels.Videos.RequestListItemViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Current Requests</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OutputLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeHumanized)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OutputLocation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDateHumanized)
+                </td>
+                <td>
+                    @if (item.Status == AVAS.Core.Domain.VideoRequestStatus.Pending || item.Status == AVAS.Core.Domain.VideoRequestStatus.Processing)
+                    {
+                        <span class="badge badge-primary">
+                            @Html.DisplayFor(modelItem => item.StatusHumanized)
+                        </span>
+                    }
+                    else if (item.Status == AVAS.Core.Domain.VideoRequestStatus.Completed)
+                    {
+                        <span class="badge badge-success">
+                            @Html.DisplayFor(modelItem => item.StatusHumanized)
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">
+                            @Html.DisplayFor(modelItem => item.StatusHumanized)
+                        </span>
+                    }
+                </td>
+                <td>
+                    @if (item.Status == AVAS.Core.Domain.VideoRequestStatus.Pending)
+                    {
+                        <form asp-action="Delete" asp-route-id="@item.Id">
+                            <button type="submit" class="btn btn-link">Delete</button>
+                        </form>
+
+                    }
+                    else {
+                        <form asp-action="Requeue" asp-route-id="@item.Id">
+                            <button type="submit" class="btn btn-link">Requeue</button>
+                        </form>
+                    }
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                    @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
